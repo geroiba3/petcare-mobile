@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import { ref, get } from 'firebase/database';
 import { database, auth } from '../../firebaseConfig';
+import { TouchableOpacity } from 'react-native';
+import { router } from 'expo-router';
 
 
 export default function MascotasScreen() {
@@ -61,7 +63,7 @@ export default function MascotasScreen() {
           data={mascotas}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <TouchableOpacity style={styles.card} onPress={() => router.push(`/mascota/${item.id}`)}>
               {item.foto && (
                 <Image source={{ uri: item.foto }} style={styles.foto} />
               )}
@@ -69,7 +71,7 @@ export default function MascotasScreen() {
                 <Text style={styles.nombre}>{item.nombre}</Text>
                 <Text style={styles.detalle}>{item.especie} · {item.raza}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
         />
       )}
