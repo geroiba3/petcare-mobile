@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import { ref, get } from 'firebase/database';
 import { database, auth } from '../../firebaseConfig';
 import { TouchableOpacity } from 'react-native';
-import { router } from 'expo-router';
+import { useState, useCallback } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect, router } from 'expo-router';
 
 
 export default function MascotasScreen() {
@@ -11,7 +12,8 @@ export default function MascotasScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  useFocusEffect(
+    useCallback(() => {
     async function cargarMascotas() {
       try {
         const uid = auth.currentUser.uid;
@@ -34,7 +36,9 @@ export default function MascotasScreen() {
     }
 
     cargarMascotas();
-  }, []);
+  }, [])
+  );
+
 
   if (loading) {
     return (
@@ -54,8 +58,12 @@ export default function MascotasScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Mis Mascotas</Text>
-
+<View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+  <Text style={styles.titulo}>Mis Mascotas</Text>
+  <TouchableOpacity onPress={() => router.push('/mascota/agregar')}>
+    <Ionicons name="add-circle" size={32} color="#F97316" />
+  </TouchableOpacity>
+</View>
       {mascotas.length === 0 ? (
         <Text style={styles.vacio}>Todavía no tenés mascotas cargadas.</Text>
       ) : (
@@ -72,7 +80,7 @@ export default function MascotasScreen() {
                 <Text style={styles.detalle}>{item.especie} · {item.raza}</Text>
               </View>
             </TouchableOpacity>
-          )}
+       )}
         />
       )}
     </View>

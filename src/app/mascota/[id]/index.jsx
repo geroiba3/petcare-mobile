@@ -10,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function DetalleMascotaScreen() {
  const {id} = useLocalSearchParams();
-  const [mascota, setMascota] = useState(null);S
+  const [mascota, setMascota] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

@@ -27,6 +27,15 @@ export default function TabsLayout() {
           ),
         }}
       />
+    <Tabs.Screen
+      name="turnos"
+      options={{
+        title: 'Turnos',
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="calendar" color={color} size={size} />
+        ),
+      }}
+    />
     </Tabs>
   );
 }
